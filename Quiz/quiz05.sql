@@ -27,6 +27,6 @@ select
 '이름:'|| name "이름",
 '아이디:'||id "아이디",
 '주민번호:'||substr(jumin, 1,6) ||'-'||substr(jumin,-7,7) "주민번호"
-                                    --substr(jumin,7,7)
+          --1번부터 6자리까지 뽑고 '-' substr(jumin,7,7) *7개를 뽑겠다.
 from student;
 
