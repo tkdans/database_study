@@ -1,0 +1,70 @@
+/********************************************/
+***join 조인
+
+--join 기준 -> 어떤 것을 기준으로 테이블 데이터를 합쳐서(연결)참조
+
+select * from emp; --deptno 컬럼 부서번호
+select * from dept; --부서정보 deptno 컬럼
+
+-- 조인 후 한번에 테이블 내용을 가져오기
+select E.EMPNO, E.ENAME, D.DNAME, D.LOC,D.DEPTNO 
+from emp E, dept D
+where E.DEPTNO = D.DEPTNO;
+
+select E.EMPNO, E.ENAME, D.DNAME, D.LOC,D.DEPTNO 
+from emp E INNER JOIN dept D
+ON E.DEPTNO = D.DEPTNO;
+
+--EMP, DEPT 조인 --> 조건, 부서번호 20, 30번만 조회
+select E.EMPNO, E.ENAME, D.DNAME, D.LOC,D.DEPTNO 
+from emp E, dept D
+where E.DEPTNO = D.DEPTNO
+AND E.DEPTNO IN (20,30) ;
+
+select E.EMPNO, E.ENAME, D.DNAME, D.LOC,D.DEPTNO 
+from emp E INNER JOIN dept D
+ON E.DEPTNO = D.DEPTNO
+WHERE E.DEPTNO IN (10,20);
+
+--똑같은 값을 조인하는 이너조인
+SELECT *
+from emp E, dept D ; --JOIN 조건을 누락 --> 전부다 곱한다. 카디션 곱
+
+---------------
+
+SELECT * FROM STUDENT; -- PRPFNE 교수번호 컬럼
+SELECT * FROM PROFESSOR; -- PROFNO 교수번호 컬럼
+
+SELECT S.NAME 학생명, P.NAME 교수명, S.STUDNO,P.PROFNO, P.EMAIL
+FROM STUDENT S, PROFESSOR P
+WHERE S.PROFNO=P.PROFNO;
+
+SELECT S.NAME 학생명, P.NAME 교수명, S.STUDNO,P.PROFNO, P.EMAIL
+FROM STUDENT S INNER JOIN PROFESSOR P
+ON S.PROFNO=P.PROFNO;
+
+--INNER JOIN VS OUTER JOIN
+
+SELECT S.NAME 학생명, P.NAME 교수명, S.STUDNO,P.PROFNO, P.EMAIL
+FROM STUDENT S, PROFESSOR P
+WHERE S.PROFNO=P.PROFNO;
+--INNER JOIN에 의해서 조인기준이 PROFNO 가 같은가? -> PROFNO NULL 비교불가 제외
+SELECT COUNT(*) FROM STUDENT;
+SELECT COUNT(*) FROM PROFESSOR;
+
+--OUTERJOIN
+--SELECT S.NAME 학생명, P.NAME 교수명, S.STUDNO,P.PROFNO, P.EMAIL
+SELECT *
+FROM STUDENT S, PROFESSOR P
+--WHERE S.PROFNO=P.PROFNO(+);--(+)가 어디인지 중요 조인을 해라
+WHERE S.PROFNO(+)=P.PROFNO;
+--SELECT S.NAME 학생명, P.NAME 교수명, S.STUDNO,P.PROFNO, P.EMAIL
+SELECT *
+--FROM STUDENT S LEFT OUTER JOIN PROFESSOR P -- 순서가 중요하다.
+--FROM STUDENT S RIGHT OUTER JOIN PROFESSOR P
+--FROM PROFESSOR P LEFT OUTER JOIN STUDENT S
+ON S.PROFNO=P.PROFNO;
+
+
+
+
